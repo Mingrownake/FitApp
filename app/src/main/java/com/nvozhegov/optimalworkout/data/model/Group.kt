@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "exercises")
-data class Exercise(
+@Entity(tableName = "groups")
+data class Group(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    @ColumnInfo(name = "title") val title: String
+    @ColumnInfo(name = "name") val name: String
 )

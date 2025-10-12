@@ -2,8 +2,9 @@ package com.nvozhegov.optimalworkout.di
 
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.nvozhegov.optimalworkout.data.dao.ExerciseDao
+import com.nvozhegov.optimalworkout.data.dao.GroupDao
+import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.database.AppDatabase
 import com.nvozhegov.optimalworkout.data.repository.ExerciseRepositoryImpl
 import com.nvozhegov.optimalworkout.domain.exercise.ExerciseRepository
@@ -43,4 +44,20 @@ interface ExerciseModule {
     fun bindExerciseRepository(
         impl: ExerciseRepositoryImpl
     ): ExerciseRepository
+
+    @Singleton
+    @Provides
+    fun provideGroupDao(
+        database: AppDatabase
+    ): GroupDao {
+        return database.groupDao()
+    }
+
+    @Singleton
+    @Provides
+    fun provideWorkoutTemplateDao(
+        database: AppDatabase
+    ): WorkoutTemplateDao {
+        return database.workoutTemplateDao()
+    }
 }

@@ -3,9 +3,19 @@ package com.nvozhegov.optimalworkout.data.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import com.nvozhegov.optimalworkout.data.dao.ExerciseDao
+import com.nvozhegov.optimalworkout.data.dao.GroupDao
+import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.Group
+import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
 
-@Database(entities = [Exercise::class], version = 1)
+@Database(entities = [
+    Exercise::class,
+    Group::class,
+    WorkoutTemplate::class], version = 1)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
+    abstract fun groupDao(): GroupDao
+    abstract fun workoutTemplateDao(): WorkoutTemplateDao
+
 }

@@ -1,7 +1,6 @@
 package com.nvozhegov.optimalworkout.di
 
 import android.app.Application
-import com.nvozhegov.optimalworkout.data.database.DatabaseInitializer
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
