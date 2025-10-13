@@ -9,14 +9,5 @@ import javax.inject.Inject
 
 @HiltAndroidApp
 class AppApplication: Application() {
-    @Inject
-    lateinit var databaseInitializer: DatabaseInitializer
 
-    override fun onCreate() {
-        super.onCreate()
-
-        CoroutineScope(Dispatchers.IO).launch {
-            databaseInitializer.initializeDB()
-        }
-    }
 }

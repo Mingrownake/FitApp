@@ -6,6 +6,5 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "workout_templates")
 data class WorkoutTemplate(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val title: String,
-    val exerciseList: List<Exercise>
+    val title: String
 )

@@ -12,7 +12,9 @@ import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
 @Database(entities = [
     Exercise::class,
     Group::class,
-    WorkoutTemplate::class], version = 1)
+    WorkoutTemplate::class],
+    version = 1,
+    exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun exerciseDao(): ExerciseDao
     abstract fun groupDao(): GroupDao

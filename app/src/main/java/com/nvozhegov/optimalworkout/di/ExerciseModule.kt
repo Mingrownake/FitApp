@@ -19,45 +19,45 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 interface ExerciseModule {
-
-    @Singleton
-    @Provides
-    fun provideAppDatabase(
-        @ApplicationContext context: Context
-    ): AppDatabase {
-        return Room.databaseBuilder<AppDatabase>(
-            context = context,
-            AppDatabase::class.java,
-            name = "app_database"
-        ).build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideExerciseDao(
-        database: AppDatabase
-    ): ExerciseDao {
-        return database.exerciseDao()
-    }
-
     @Binds
     fun bindExerciseRepository(
         impl: ExerciseRepositoryImpl
     ): ExerciseRepository
+    companion object {
+        @Singleton
+        @Provides
+        fun provideWorkoutTemplateDao(
+            database: AppDatabase
+        ): WorkoutTemplateDao {
+            return database.workoutTemplateDao()
+        }
 
-    @Singleton
-    @Provides
-    fun provideGroupDao(
-        database: AppDatabase
-    ): GroupDao {
-        return database.groupDao()
-    }
+        @Singleton
+        @Provides
+        fun provideGroupDao(
+            database: AppDatabase
+        ): GroupDao {
+            return database.groupDao()
+        }
 
-    @Singleton
-    @Provides
-    fun provideWorkoutTemplateDao(
-        database: AppDatabase
-    ): WorkoutTemplateDao {
-        return database.workoutTemplateDao()
+        @Singleton
+        @Provides
+        fun provideAppDatabase(
+            @ApplicationContext context: Context
+        ): AppDatabase {
+            return Room.databaseBuilder<AppDatabase>(
+                context = context,
+                AppDatabase::class.java,
+                name = "app_database"
+            ).build()
+        }
+
+        @Singleton
+        @Provides
+        fun provideExerciseDao(
+            database: AppDatabase
+        ): ExerciseDao {
+            return database.exerciseDao()
+        }
     }
 }
