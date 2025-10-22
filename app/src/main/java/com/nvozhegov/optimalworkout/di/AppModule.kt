@@ -7,7 +7,9 @@ import com.nvozhegov.optimalworkout.data.dao.GroupDao
 import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.database.AppDatabase
 import com.nvozhegov.optimalworkout.data.repository.ExerciseRepositoryImpl
+import com.nvozhegov.optimalworkout.data.repository.WorkoutTemplateRepositoryImpl
 import com.nvozhegov.optimalworkout.domain.exercise.ExerciseRepository
+import com.nvozhegov.optimalworkout.domain.workoutTemplate.WorkoutTemplateRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -18,11 +20,17 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-interface ExerciseModule {
+interface AppModule {
     @Binds
     fun bindExerciseRepository(
         impl: ExerciseRepositoryImpl
     ): ExerciseRepository
+
+    @Binds
+    fun bindWorkoutTemplate(
+        impl: WorkoutTemplateRepositoryImpl
+    ): WorkoutTemplateRepository
+
     companion object {
         @Singleton
         @Provides

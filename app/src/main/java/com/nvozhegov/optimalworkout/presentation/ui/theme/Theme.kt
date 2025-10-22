@@ -16,9 +16,10 @@ import com.example.ui.theme.AppTypography
 private val lightScheme = lightColorScheme(
     primary = theme_light_primary,
     onPrimary = theme_light_on_primary,
-    background = theme_light_background,
     secondary = theme_light_secondary,
-    outline = theme_light_outline
+    tertiary = theme_light_tertiary,
+    background = theme_light_background,
+    onBackground = theme_light_on_background
 )
 
 private val darkScheme = darkColorScheme(
