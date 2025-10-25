@@ -13,7 +13,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -29,6 +28,7 @@ import com.nvozhegov.optimalworkout.presentation.screen.calendar.CalendarScreen
 import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesScreen
 import com.nvozhegov.optimalworkout.presentation.screen.profile.ProfileScreen
 import com.nvozhegov.optimalworkout.presentation.screen.settings.SettingsScreen
+import com.nvozhegov.optimalworkout.presentation.screen.template.NewWorkoutScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.TemplatesScreen
 
 @Composable
@@ -37,9 +37,7 @@ fun AppNavigation(
 ) {
     val navController: NavHostController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val currentScreen = AppScreen.valueOf(
-        backStackEntry?.destination?.route ?: AppScreen.Exercises.name
-    )
+    val currentTitleScreen = backStackEntry?.destination?.route ?: AppScreen.Exercises.title
 
     val scaffoldState = remember {
         mutableStateOf(ScaffoldViewState())
@@ -48,23 +46,21 @@ fun AppNavigation(
         modifier = modifier.fillMaxSize(),
         topBar = {
             TopBar(
-                currentScreen = currentScreen,
-                canBack = scaffoldState.value.canBack,
-                canRemove = scaffoldState.value.canRemove,
-                onDelete = { scaffoldState.value.actionsButton },
-                onBack = { scaffoldState.value.navigationButton }
+                title = scaffoldState.value.title,
+                navigationIcon = scaffoldState.value.navigationIcon,
+                actionButton = scaffoldState.value.actionButton
             )
         },
         bottomBar = {
             BottomBar(
                 navController = navController,
-                currentScreen = currentScreen
+                currentScreenTitle = currentTitleScreen
             )
         }
     ) {innerPadding ->
         NavHost(
             navController = navController,
-            startDestination = AppScreen.Exercises.name,
+            startDestination = AppScreen.Templates.title,
             modifier = Modifier
                 .padding(innerPadding)
                 .background(color = MaterialTheme.colorScheme.background),
@@ -81,31 +77,38 @@ fun AppNavigation(
                 ) + fadeOut(animationSpec = tween(durationMillis = 300))
             }
         ) {
-            composable(route = AppScreen.Profile.name) {
+            composable(route = AppScreen.Profile.title) {
                 ProfileScreen(
                     scaffoldViewState = scaffoldState
                 )
             }
 
-            composable(route = AppScreen.Templates.name) {
+            composable(route = AppScreen.Templates.title) {
                 TemplatesScreen(
+                    scaffoldViewState = scaffoldState,
+                    navController = navController
+                )
+            }
+
+            composable(route = AppScreen.NewTemplate.title) {
+                NewWorkoutScreen(
                     scaffoldViewState = scaffoldState
                 )
             }
 
-            composable(route = AppScreen.Exercises.name) {
+            composable(route = AppScreen.Exercises.title) {
                 ExercisesScreen(
                     scaffoldViewState = scaffoldState
                 )
             }
 
-            composable(route = AppScreen.Calendar.name) {
+            composable(route = AppScreen.Calendar.title) {
                 CalendarScreen(
                     scaffoldViewState = scaffoldState
                 )
             }
 
-            composable(route = AppScreen.Settings.name) {
+            composable(route = AppScreen.Settings.title) {
                 SettingsScreen(
                     scaffoldViewState = scaffoldState
                 )
@@ -115,22 +118,21 @@ fun AppNavigation(
 
 
 }
-
-enum class AppScreen(
+sealed class AppScreen(
     val title: String,
-    @DrawableRes val iconId: Int
+    @DrawableRes val iconId: Int = R.drawable.round_add_circle_outline_24
 ) {
-    Profile("Profile", R.drawable.baseline_person_24 ),
-    Templates("Templates", R.drawable.round_list_alt_24),
-    Exercises("Exercises", R.drawable.outline_exercise_24),
-    Calendar("Calendar", R.drawable.round_calendar_month_24),
-    Settings("Settings", R.drawable.round_settings_24)
+    data object Profile: AppScreen("Profile", R.drawable.baseline_person_24)
+    data object Templates: AppScreen("Templates", R.drawable.round_list_alt_24)
+    data object Exercises: AppScreen("Exercises", R.drawable.outline_exercise_24)
+    data object Calendar: AppScreen("Calendar", R.drawable.round_calendar_month_24)
+    data object Settings: AppScreen("Settings", R.drawable.round_settings_24)
+    data object NewTemplate: AppScreen("NEW TEMPLATE")
 }
 
 data class ScaffoldViewState(
-    val canBack: Boolean = false,
-    val canRemove: Boolean = false,
-    val navigationButton: @Composable () -> Unit = {},
-    val actionsButton: @Composable () -> Unit = {}
+    val title: @Composable () -> Unit = {},
+    val navigationIcon: @Composable () -> Unit = {},
+    val actionButton: @Composable () -> Unit = {}
 )
 

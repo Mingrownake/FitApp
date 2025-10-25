@@ -18,12 +18,13 @@ fun ProfileScreen(
 ) {
     LaunchedEffect(Unit) {
         scaffoldViewState.value = ScaffoldViewState(
-            canBack = false,
-            canRemove = false,
-            navigationButton = {
+            title = {
 
             },
-            actionsButton = {
+            navigationIcon = {
+
+            },
+            actionButton = {
 
             }
         )

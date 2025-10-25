@@ -8,7 +8,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.OptimalWorkoutTheme
 import com.nvozhegov.optimalworkout.presentation.navigation.AppNavigation
-import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
