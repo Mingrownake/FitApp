@@ -1,4 +1,4 @@
-package com.nvozhegov.optimalworkout.presentation.screen.template
+package com.nvozhegov.optimalworkout.presentation.screen.workout
 
 import androidx.lifecycle.ViewModel
 import com.nvozhegov.optimalworkout.domain.workoutTemplate.GetByIdWorkoutTemplateUseCase

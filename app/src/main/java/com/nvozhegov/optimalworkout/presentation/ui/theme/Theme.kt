@@ -8,8 +8,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.example.ui.theme.AppTypography
 
@@ -18,6 +16,7 @@ private val lightScheme = lightColorScheme(
     onPrimary = theme_light_on_primary,
     secondary = theme_light_secondary,
     tertiary = theme_light_tertiary,
+    onTertiary = theme_light_on_tertiary,
     background = theme_light_background,
     onBackground = theme_light_on_background
 )

@@ -12,9 +12,9 @@ import androidx.compose.ui.Modifier
 @Composable
 fun TopBar(
     modifier: Modifier = Modifier,
-    title: @Composable () -> Unit,
-    navigationIcon: @Composable () -> Unit,
-    actionButton: @Composable () -> Unit
+    title: @Composable () -> Unit = {},
+    navigationIcon: @Composable () -> Unit = {},
+    actionButton: @Composable () -> Unit = {}
 ) {
     TopAppBar(
         modifier = modifier,
