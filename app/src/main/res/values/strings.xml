@@ -10,4 +10,5 @@
     <string name="settings">Settings</string>
     <string name="templates">Templates</string>
     <string name="workout_template">Workout Template</string>
+    <string name="list_exercise">Список упражнений</string>
 </resources>

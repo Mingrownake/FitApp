@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.nvozhegov.optimalworkout.R
 
 @Composable
-fun AddButtonTemplate(
+fun WideAddButton(
     modifier: Modifier = Modifier,
     action: () -> Unit = {}
 ) {
@@ -23,7 +23,6 @@ fun AddButtonTemplate(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .border(
                 1.dp,
                 color = MaterialTheme.colorScheme.secondary,

@@ -32,7 +32,6 @@ fun SelectButtonTemplate(
         shape = RoundedCornerShape(8.dp),
         modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp)
             .border(
                 1.dp,
                 color = MaterialTheme.colorScheme.secondary,

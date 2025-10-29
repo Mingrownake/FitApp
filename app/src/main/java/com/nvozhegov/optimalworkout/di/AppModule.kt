@@ -4,11 +4,14 @@ import android.content.Context
 import androidx.room.Room
 import com.nvozhegov.optimalworkout.data.dao.ExerciseDao
 import com.nvozhegov.optimalworkout.data.dao.GroupDao
+import com.nvozhegov.optimalworkout.data.dao.TemplateDao
 import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.database.AppDatabase
 import com.nvozhegov.optimalworkout.data.repository.ExerciseRepositoryImpl
+import com.nvozhegov.optimalworkout.data.repository.TemplateRepositoryImpl
 import com.nvozhegov.optimalworkout.data.repository.WorkoutTemplateRepositoryImpl
 import com.nvozhegov.optimalworkout.domain.exercise.ExerciseRepository
+import com.nvozhegov.optimalworkout.domain.template.TemplateRepository
 import com.nvozhegov.optimalworkout.domain.workoutTemplate.WorkoutTemplateRepository
 import dagger.Binds
 import dagger.Module
@@ -27,9 +30,14 @@ interface AppModule {
     ): ExerciseRepository
 
     @Binds
-    fun bindWorkoutTemplate(
+    fun bindWorkoutTemplateRepository(
         impl: WorkoutTemplateRepositoryImpl
     ): WorkoutTemplateRepository
+
+    @Binds
+    fun bindTemplateRepository(
+        impl: TemplateRepositoryImpl
+    ): TemplateRepository
 
     companion object {
         @Singleton
@@ -50,14 +58,10 @@ interface AppModule {
 
         @Singleton
         @Provides
-        fun provideAppDatabase(
-            @ApplicationContext context: Context
-        ): AppDatabase {
-            return Room.databaseBuilder<AppDatabase>(
-                context = context,
-                AppDatabase::class.java,
-                name = "app_database"
-            ).build()
+        fun provideTemplateDao(
+            database: AppDatabase
+        ): TemplateDao {
+            return database.templateDao()
         }
 
         @Singleton
@@ -66,6 +70,18 @@ interface AppModule {
             database: AppDatabase
         ): ExerciseDao {
             return database.exerciseDao()
+        }
+
+        @Singleton
+        @Provides
+        fun provideAppDatabase(
+            @ApplicationContext context: Context
+        ): AppDatabase {
+            return Room.databaseBuilder<AppDatabase>(
+                context = context,
+                AppDatabase::class.java,
+                name = "app_database"
+            ).build()
         }
     }
 }

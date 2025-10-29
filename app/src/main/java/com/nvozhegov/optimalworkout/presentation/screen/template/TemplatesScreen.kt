@@ -3,6 +3,7 @@ package com.nvozhegov.optimalworkout.presentation.screen.template
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
@@ -17,7 +18,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
-import com.nvozhegov.optimalworkout.presentation.components.template.AddButtonTemplate
+import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
 import com.nvozhegov.optimalworkout.presentation.components.template.SelectButtonTemplate
 import com.nvozhegov.optimalworkout.presentation.navigation.AppScreen
 import com.nvozhegov.optimalworkout.presentation.navigation.MainScaffoldViewState
@@ -27,9 +28,10 @@ fun TemplatesScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<MainScaffoldViewState>,
     navController: NavController,
-    templatesViewModel: TemplateViewModel = hiltViewModel()
+    templatesViewModel: TemplatesViewModel = hiltViewModel()
 ) {
     val state by templatesViewModel.uiState.collectAsState()
+    val templateList by state.templateList.collectAsState(listOf())
     LaunchedEffect(Unit) {
         scaffoldViewState.value = MainScaffoldViewState(
             title = {
@@ -46,29 +48,30 @@ fun TemplatesScreen(
         )
     }
     LazyColumn(
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize().padding(horizontal = 16.dp)
     ) {
         item {
-            AddButtonTemplate(
+            WideAddButton(
                 action = {
                     navController.navigate(AppScreen.NewTemplate) {
                         launchSingleTop = true
                     }
                 }
             )
-        }
-        item {
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
         }
         items(
-            state.templateList,
+            templateList,
             key = {
                 it.id
             }
         ) {template ->
             SelectButtonTemplate(templateName = template.title)
+            Spacer(
+                modifier = Modifier.height(8.dp)
+            )
         }
     }
 }
