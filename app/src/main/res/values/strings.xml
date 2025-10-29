@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">OptimalWorkout</string>
+    <string name="app_name">Optimal Workout</string>
     <string name="template">Шаблон</string>
     <string name="templateName">Название шаблона</string>
     <string name="enterTemplateName">Напишите наименование шаблона</string>

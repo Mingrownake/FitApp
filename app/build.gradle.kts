@@ -46,6 +46,7 @@ android {
 dependencies {
     implementation(libs.view)
     implementation(libs.compose)
+    implementation(libs.androidx.core.splashscreen)
     implementation(libs.androidx.compose.ui.text)
     implementation(libs.androidx.compose.foundation)
     coreLibraryDesugaring(libs.desugar.jdk.libs)
