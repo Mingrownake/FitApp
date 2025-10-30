@@ -11,4 +11,6 @@
     <string name="templates">Templates</string>
     <string name="workout_template">Workout Template</string>
     <string name="list_exercise">Список упражнений</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 </resources>
