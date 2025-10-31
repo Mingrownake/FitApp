@@ -1,11 +1,11 @@
-package com.nvozhegov.optimalworkout.presentation.screen.template
+package com.nvozhegov.optimalworkout.presentation.screen.group
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nvozhegov.optimalworkout.data.model.Group
 import com.nvozhegov.optimalworkout.data.model.Template
-import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
-import com.nvozhegov.optimalworkout.domain.template.GetAllTemplatesUseCase
-import com.nvozhegov.optimalworkout.domain.workoutTemplate.GetAllWorkoutTemplateUseCase
+import com.nvozhegov.optimalworkout.domain.group.GetAllGroups
+import com.nvozhegov.optimalworkout.presentation.screen.template.TemplatesState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +15,11 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-
 @HiltViewModel
-class TemplatesViewModel @Inject constructor(
-    getAllTemplatesUseCase: GetAllTemplatesUseCase
+class GroupViewModel @Inject constructor(
+    private val getAllGroups: GetAllGroups
 ): ViewModel() {
-    private val _uiState = MutableStateFlow(TemplatesState(
+    private val _uiState = MutableStateFlow(GroupsState(
         flowOf()
     ))
     val uiState = _uiState.asStateFlow()
@@ -29,13 +28,14 @@ class TemplatesViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    templateList = getAllTemplatesUseCase()
+                    groupList = getAllGroups()
                 )
             }
         }
+
     }
 }
 
-data class TemplatesState(
-    val templateList: Flow<List<Template>>
+data class GroupsState(
+    val groupList: Flow<List<Group>>
 )

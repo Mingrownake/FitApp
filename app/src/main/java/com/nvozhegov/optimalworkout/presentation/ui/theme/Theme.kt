@@ -18,7 +18,8 @@ private val lightScheme = lightColorScheme(
     tertiary = theme_light_tertiary,
     onTertiary = theme_light_on_tertiary,
     background = theme_light_background,
-    onBackground = theme_light_on_background
+    onBackground = theme_light_on_background,
+    error = theme_light_error
 )
 
 private val darkScheme = darkColorScheme(

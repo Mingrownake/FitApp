@@ -16,16 +16,16 @@ import com.kizitonwose.calendar.core.CalendarDay
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
-import com.nvozhegov.optimalworkout.presentation.navigation.MainScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 import java.time.YearMonth
 
 @Composable
 fun CalendarScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<MainScaffoldViewState>
+    scaffoldViewState: MutableState<TopBarScaffoldViewState>
 ) {
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = MainScaffoldViewState(
+        scaffoldViewState.value = TopBarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.calendar)

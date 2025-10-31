@@ -22,6 +22,7 @@ import com.nvozhegov.optimalworkout.presentation.bars.BottomBar
 import com.nvozhegov.optimalworkout.presentation.bars.TopBar
 import com.nvozhegov.optimalworkout.presentation.screen.calendar.CalendarScreen
 import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesScreen
+import com.nvozhegov.optimalworkout.presentation.screen.group.GroupScreen
 import com.nvozhegov.optimalworkout.presentation.screen.profile.ProfileScreen
 import com.nvozhegov.optimalworkout.presentation.screen.settings.SettingsScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateScreen
@@ -36,11 +37,13 @@ fun Navigation() {
         startDestination = AppScreen.Main
     ) {
         composable<AppScreen.Main> {
-            MainBottomBar(navController = navController)
+            MainScreen(
+                navController = navController
+            )
         }
 
-        composable<AppScreen.NewTemplate> {
-            NewTemplateScreen(
+        composable<AppScreen.Template> {
+            TemplateScreen(
                 navController = navController
             )
         }
@@ -49,16 +52,16 @@ fun Navigation() {
 
 
 @Composable
-fun MainBottomBar(
+fun MainScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
     val bottomBarNavController = rememberNavController()
     val backStackEntry by bottomBarNavController.currentBackStackEntryAsState()
-    val currentTitleScreen= backStackEntry?.destination?.route ?: BottomBarScreen.Exercises.title
+    val currentTitleScreen= backStackEntry?.destination?.route ?: BottomNavScreen.Exercises.title
 
     val scaffoldState = remember {
-        mutableStateOf(MainScaffoldViewState())
+        mutableStateOf(TopBarScaffoldViewState())
     }
 
     Scaffold(
@@ -69,15 +72,14 @@ fun MainBottomBar(
                 navController = bottomBarNavController,
                 onClick = {
                     val navigateToScreen = when(it) {
-                        BottomBarScreen.Profile.title -> BottomBarScreen.Profile.title
-                        BottomBarScreen.Templates.title -> BottomBarScreen.Templates.title
-                        BottomBarScreen.Calendar.title -> BottomBarScreen.Calendar.title
-                        BottomBarScreen.Settings.title -> BottomBarScreen.Settings.title
-                        else ->  BottomBarScreen.Exercises.title
+                        BottomNavScreen.Profile.title -> BottomNavScreen.Profile.title
+                        BottomNavScreen.Templates.title -> BottomNavScreen.Templates.title
+                        BottomNavScreen.Calendar.title -> BottomNavScreen.Calendar.title
+                        BottomNavScreen.Settings.title -> BottomNavScreen.Settings.title
+                        else ->  BottomNavScreen.Exercises.title
                     }
                     if (currentTitleScreen != navigateToScreen) {
                         bottomBarNavController.navigate(navigateToScreen) {
-                            restoreState = true
                             launchSingleTop = true
                         }
                     }
@@ -97,10 +99,10 @@ fun MainBottomBar(
             modifier = Modifier
                 .padding(innerPadding)
                 .background(color = MaterialTheme.colorScheme.background),
-            startDestination = BottomBarScreen.Exercises.title
+            startDestination = BottomNavScreen.Exercises.title
         ) {
             composable(
-                route = BottomBarScreen.Profile.title
+                route = BottomNavScreen.Profile.title
             ) {
                 ProfileScreen(
                     scaffoldViewState = scaffoldState
@@ -108,7 +110,7 @@ fun MainBottomBar(
             }
 
             composable(
-                route = BottomBarScreen.Templates.title
+                route = BottomNavScreen.Templates.title
             ) {
                 TemplatesScreen(
                     scaffoldViewState = scaffoldState,
@@ -117,7 +119,7 @@ fun MainBottomBar(
             }
 
             composable(
-                route = BottomBarScreen.Exercises.title
+                route = BottomNavScreen.Exercises.title
             ) {
                 ExercisesScreen(
                     scaffoldViewState = scaffoldState
@@ -125,7 +127,7 @@ fun MainBottomBar(
             }
 
             composable(
-                route = BottomBarScreen.Calendar.title
+                route = BottomNavScreen.Calendar.title
             ) {
                 CalendarScreen(
                     scaffoldViewState = scaffoldState
@@ -133,9 +135,58 @@ fun MainBottomBar(
             }
 
             composable(
-                route = BottomBarScreen.Settings.title
+                route = BottomNavScreen.Settings.title
             ) {
                 SettingsScreen(
+                    scaffoldViewState = scaffoldState
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun TemplateScreen(
+    modifier: Modifier = Modifier,
+    navController: NavController
+) {
+    val templateNavController = rememberNavController()
+    val scaffoldState = remember {
+        mutableStateOf(TopBarScaffoldViewState())
+    }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        topBar = {
+            TopBar(
+                title = scaffoldState.value.title,
+                navigationIcon = scaffoldState.value.navigationIcon,
+                actionButton = scaffoldState.value.actionButton
+            )
+        }
+    ) {innerPadding ->
+        NavHost(
+            navController = templateNavController,
+            modifier = Modifier
+                .padding(innerPadding)
+                .background(color = MaterialTheme.colorScheme.background),
+            startDestination = TemplateNavScreen.NewTemplate.title
+        ) {
+            composable(
+                route = TemplateNavScreen.NewTemplate.title
+            ) {
+                NewTemplateScreen(
+                    outerNavController = navController,
+                    innerNavController = templateNavController,
+                    scaffoldViewState = scaffoldState
+                )
+            }
+
+            composable(
+                route = TemplateNavScreen.Groups.title
+            ) {
+                GroupScreen(
+                    navController = templateNavController,
                     scaffoldViewState = scaffoldState
                 )
             }

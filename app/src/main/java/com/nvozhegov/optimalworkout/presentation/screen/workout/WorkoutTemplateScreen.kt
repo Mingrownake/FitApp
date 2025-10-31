@@ -19,19 +19,19 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.BaseOutlinedTextField
-import com.nvozhegov.optimalworkout.presentation.navigation.MainScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 
 
 @Composable
 fun WorkoutTemplateScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<MainScaffoldViewState>,
+    scaffoldViewState: MutableState<TopBarScaffoldViewState>,
     viewModel: WorkoutTemplateViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = MainScaffoldViewState(
+        scaffoldViewState.value = TopBarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.workout_template)

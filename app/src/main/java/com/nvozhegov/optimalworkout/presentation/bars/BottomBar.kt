@@ -8,15 +8,13 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.nvozhegov.optimalworkout.presentation.navigation.AppScreen
-import com.nvozhegov.optimalworkout.presentation.navigation.BottomBarScreen
+import com.nvozhegov.optimalworkout.presentation.navigation.BottomNavScreen
 
 @Composable
 fun BottomBar(
@@ -27,11 +25,11 @@ fun BottomBar(
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
     val navigationList = listOf(
-        BottomBarScreen.Profile,
-        BottomBarScreen.Templates,
-        BottomBarScreen.Exercises,
-        BottomBarScreen.Calendar,
-        BottomBarScreen.Settings
+        BottomNavScreen.Profile,
+        BottomNavScreen.Templates,
+        BottomNavScreen.Exercises,
+        BottomNavScreen.Calendar,
+        BottomNavScreen.Settings
     )
     NavigationBar(
         modifier = modifier.height(80.dp),

@@ -21,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -29,7 +28,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -42,13 +40,13 @@ import com.nvozhegov.optimalworkout.presentation.components.template.ModalBottom
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
 import com.nvozhegov.optimalworkout.presentation.components.template.SelectButtonTemplate
 import com.nvozhegov.optimalworkout.presentation.navigation.AppScreen
-import com.nvozhegov.optimalworkout.presentation.navigation.MainScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplatesScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<MainScaffoldViewState>,
+    scaffoldViewState: MutableState<TopBarScaffoldViewState>,
     navController: NavController,
     templatesViewModel: TemplatesViewModel = hiltViewModel()
 ) {
@@ -64,17 +62,11 @@ fun TemplatesScreen(
     }
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = MainScaffoldViewState(
+        scaffoldViewState.value = TopBarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.templates)
                 )
-            },
-            navigationIcon = {
-
-            },
-            actionButton = {
-
             }
         )
     }
@@ -87,7 +79,7 @@ fun TemplatesScreen(
             sheetState = sheetState
         ) {
             Column(
-                modifier = Modifier.padding(top = 8.dp, bottom = 32.dp, start = 8.dp, end = 8.dp)
+                modifier = Modifier.padding(top = 0.dp, bottom = 24.dp, start = 8.dp, end = 8.dp)
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -96,7 +88,7 @@ fun TemplatesScreen(
                     Text(
                         text = "${selectedTemplate?.title}",
                         fontWeight = FontWeight.Bold,
-                        fontSize = 18.sp
+                        fontSize = 16.sp
                     )
                 }
                 ModalBottomSheetButton(
@@ -127,7 +119,7 @@ fun TemplatesScreen(
         item {
             WideAddButton(
                 action = {
-                    navController.navigate(AppScreen.NewTemplate) {
+                    navController.navigate(AppScreen.Template) {
                         launchSingleTop = true
                     }
                 }

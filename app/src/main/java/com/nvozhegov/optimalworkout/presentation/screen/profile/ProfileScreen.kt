@@ -12,15 +12,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
-import com.nvozhegov.optimalworkout.presentation.navigation.MainScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 
 @Composable
 fun ProfileScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<MainScaffoldViewState>
+    scaffoldViewState: MutableState<TopBarScaffoldViewState>
 ) {
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = MainScaffoldViewState(
+        scaffoldViewState.value = TopBarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.profile)

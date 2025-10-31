@@ -2,7 +2,8 @@ package com.nvozhegov.optimalworkout.domain.group
 
 import com.nvozhegov.optimalworkout.data.model.Exercise
 import com.nvozhegov.optimalworkout.data.model.Group
+import kotlinx.coroutines.flow.Flow
 
 interface GroupRepository {
-    suspend fun getAll(): List<Group>
+    fun getAll(): Flow<List<Group>>
 }

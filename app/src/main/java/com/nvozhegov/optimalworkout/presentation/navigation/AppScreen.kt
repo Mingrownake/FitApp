@@ -7,5 +7,5 @@ sealed interface AppScreen {
     @Serializable
     data object Main: AppScreen
     @Serializable
-    data object NewTemplate: AppScreen
+    data object Template: AppScreen
 }

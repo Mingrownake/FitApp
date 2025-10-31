@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetAllTemplatesUseCase @Inject constructor(
     val templateRepository: TemplateRepository
 ) {
-    suspend operator fun invoke(): Flow<List<Template>> {
+    operator fun invoke(): Flow<List<Template>> {
         return templateRepository.getAllTemplates()
     }
 }

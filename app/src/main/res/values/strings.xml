@@ -13,4 +13,5 @@
     <string name="list_exercise">Список упражнений</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="choose_an_exercise">Choose an exercise</string>
 </resources>

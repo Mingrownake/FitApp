@@ -8,9 +8,11 @@ import com.nvozhegov.optimalworkout.data.dao.TemplateDao
 import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.database.AppDatabase
 import com.nvozhegov.optimalworkout.data.repository.ExerciseRepositoryImpl
+import com.nvozhegov.optimalworkout.data.repository.GroupRepositoryImpl
 import com.nvozhegov.optimalworkout.data.repository.TemplateRepositoryImpl
 import com.nvozhegov.optimalworkout.data.repository.WorkoutTemplateRepositoryImpl
 import com.nvozhegov.optimalworkout.domain.exercise.ExerciseRepository
+import com.nvozhegov.optimalworkout.domain.group.GroupRepository
 import com.nvozhegov.optimalworkout.domain.template.TemplateRepository
 import com.nvozhegov.optimalworkout.domain.workoutTemplate.WorkoutTemplateRepository
 import dagger.Binds
@@ -38,6 +40,11 @@ interface AppModule {
     fun bindTemplateRepository(
         impl: TemplateRepositoryImpl
     ): TemplateRepository
+
+    @Binds
+    fun bindGroupRepository(
+        impl: GroupRepositoryImpl
+    ): GroupRepository
 
     companion object {
         @Singleton
@@ -77,11 +84,11 @@ interface AppModule {
         fun provideAppDatabase(
             @ApplicationContext context: Context
         ): AppDatabase {
-            return Room.databaseBuilder<AppDatabase>(
+            return Room.databaseBuilder(
                 context = context,
                 AppDatabase::class.java,
                 name = "app_database"
-            ).build()
+            ).createFromAsset("database/fitnessApp.db").build()
         }
     }
 }

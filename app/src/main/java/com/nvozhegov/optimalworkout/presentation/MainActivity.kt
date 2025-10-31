@@ -9,6 +9,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.compose.OptimalWorkoutTheme
+import com.nvozhegov.optimalworkout.R
+import com.nvozhegov.optimalworkout.presentation.components.template.GroupButton
+import com.nvozhegov.optimalworkout.presentation.components.template.SelectButtonTemplate
 import com.nvozhegov.optimalworkout.presentation.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -37,7 +40,5 @@ class MainActivity : ComponentActivity() {
 @Preview()
 @Composable
 fun PreviewComposable() {
-    OptimalWorkoutTheme {
-        Navigation()
-    }
+
 }
