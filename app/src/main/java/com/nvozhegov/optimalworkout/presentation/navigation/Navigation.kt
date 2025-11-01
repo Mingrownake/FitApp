@@ -18,6 +18,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navigation
 import com.nvozhegov.optimalworkout.presentation.bars.BottomBar
 import com.nvozhegov.optimalworkout.presentation.bars.TopBar
 import com.nvozhegov.optimalworkout.presentation.screen.calendar.CalendarScreen
@@ -27,6 +28,7 @@ import com.nvozhegov.optimalworkout.presentation.screen.profile.ProfileScreen
 import com.nvozhegov.optimalworkout.presentation.screen.settings.SettingsScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.TemplatesScreen
+import com.nvozhegov.optimalworkout.presentation.screen.workout.WorkoutsScreen
 
 @Composable
 fun Navigation() {
@@ -58,7 +60,7 @@ fun MainScreen(
 ) {
     val bottomBarNavController = rememberNavController()
     val backStackEntry by bottomBarNavController.currentBackStackEntryAsState()
-    val currentTitleScreen= backStackEntry?.destination?.route ?: BottomNavScreen.Exercises.title
+    val currentTitleScreen= backStackEntry?.destination?.route ?: BottomNavScreen.Workouts.title
 
     val scaffoldState = remember {
         mutableStateOf(TopBarScaffoldViewState())
@@ -76,7 +78,7 @@ fun MainScreen(
                         BottomNavScreen.Templates.title -> BottomNavScreen.Templates.title
                         BottomNavScreen.Calendar.title -> BottomNavScreen.Calendar.title
                         BottomNavScreen.Settings.title -> BottomNavScreen.Settings.title
-                        else ->  BottomNavScreen.Exercises.title
+                        else ->  BottomNavScreen.Workouts.title
                     }
                     if (currentTitleScreen != navigateToScreen) {
                         bottomBarNavController.navigate(navigateToScreen) {
@@ -99,7 +101,7 @@ fun MainScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .background(color = MaterialTheme.colorScheme.background),
-            startDestination = BottomNavScreen.Exercises.title
+            startDestination = BottomNavScreen.Workouts.title
         ) {
             composable(
                 route = BottomNavScreen.Profile.title
@@ -114,14 +116,18 @@ fun MainScreen(
             ) {
                 TemplatesScreen(
                     scaffoldViewState = scaffoldState,
-                    navController = navController
+                    navigateTo = {
+                        navController.navigate(AppScreen.Template) {
+                            launchSingleTop = true
+                        }
+                    }
                 )
             }
 
             composable(
-                route = BottomNavScreen.Exercises.title
+                route = BottomNavScreen.Workouts.title
             ) {
-                ExercisesScreen(
+                WorkoutsScreen(
                     scaffoldViewState = scaffoldState
                 )
             }
@@ -170,25 +176,67 @@ fun TemplateScreen(
             modifier = Modifier
                 .padding(innerPadding)
                 .background(color = MaterialTheme.colorScheme.background),
-            startDestination = TemplateNavScreen.NewTemplate.title
-        ) {
-            composable(
-                route = TemplateNavScreen.NewTemplate.title
-            ) {
-                NewTemplateScreen(
-                    outerNavController = navController,
-                    innerNavController = templateNavController,
-                    scaffoldViewState = scaffoldState
-                )
+            startDestination = TemplateNavScreen.Template.title,
+            enterTransition = {
+                slideInHorizontally {
+                    it
+                }
+            },
+            exitTransition = {
+                slideOutHorizontally {
+                    it
+                }
             }
-
-            composable(
-                route = TemplateNavScreen.Groups.title
+        ) {
+            navigation(
+                route = TemplateNavScreen.Template.title,
+                startDestination = TemplateNavScreen.NewTemplate.title
             ) {
-                GroupScreen(
-                    navController = templateNavController,
-                    scaffoldViewState = scaffoldState
-                )
+                composable(
+                    route = TemplateNavScreen.NewTemplate.title
+                ) {
+                    NewTemplateScreen(
+                        scaffoldViewState = scaffoldState,
+                        actionBack = {
+                            navController.navigateUp()
+                        },
+                        navigateTo = {
+                            templateNavController.navigate(TemplateNavScreen.Groups.title) {
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                }
+
+                composable(
+                    route = TemplateNavScreen.Groups.title
+                ) {
+                    GroupScreen(
+                        scaffoldViewState = scaffoldState,
+                        actionBack = { templateNavController.popBackStack() },
+                        navigateTo = {
+                            templateNavController.navigate(
+                                TemplateNavScreen.Exercise.title
+                            ) {
+                                launchSingleTop = true
+                            }
+                        }
+                    )
+                }
+
+                composable(
+                    route = TemplateNavScreen.Exercise.title
+                ) {
+                    ExercisesScreen(
+                        scaffoldViewState = scaffoldState,
+                        actionBack = {
+                            templateNavController.popBackStack()
+                        },
+                        navigateTo = {
+
+                        }
+                    )
+                }
             }
         }
     }

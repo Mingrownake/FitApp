@@ -47,8 +47,8 @@ import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewSt
 fun TemplatesScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
-    navController: NavController,
-    templatesViewModel: TemplatesViewModel = hiltViewModel()
+    templatesViewModel: TemplatesViewModel = hiltViewModel(),
+    navigateTo: () -> Unit
 ) {
     val state by templatesViewModel.uiState.collectAsState()
     val templateList by state.templateList.collectAsState(listOf())
@@ -118,11 +118,7 @@ fun TemplatesScreen(
     ) {
         item {
             WideAddButton(
-                action = {
-                    navController.navigate(AppScreen.Template) {
-                        launchSingleTop = true
-                    }
-                }
+                action = navigateTo
             )
             Spacer(
                 modifier = Modifier.height(8.dp)

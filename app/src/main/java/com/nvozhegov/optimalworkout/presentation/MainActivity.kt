@@ -40,5 +40,10 @@ class MainActivity : ComponentActivity() {
 @Preview()
 @Composable
 fun PreviewComposable() {
+    GroupButton(
+        groupName = "Chest",
+        onClick = {
 
+        }
+    )
 }

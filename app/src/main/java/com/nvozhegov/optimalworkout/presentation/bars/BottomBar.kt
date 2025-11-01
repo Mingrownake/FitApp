@@ -27,7 +27,7 @@ fun BottomBar(
     val navigationList = listOf(
         BottomNavScreen.Profile,
         BottomNavScreen.Templates,
-        BottomNavScreen.Exercises,
+        BottomNavScreen.Workouts,
         BottomNavScreen.Calendar,
         BottomNavScreen.Settings
     )

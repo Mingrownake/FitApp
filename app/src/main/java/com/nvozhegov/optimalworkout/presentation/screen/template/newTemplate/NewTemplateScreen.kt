@@ -1,12 +1,14 @@
 package com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -43,10 +45,10 @@ import kotlinx.coroutines.launch
 @Composable
 fun NewTemplateScreen(
     modifier: Modifier = Modifier,
-    outerNavController: NavController,
-    innerNavController: NavController,
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
-    templateViewModel: NewTemplateViewModel = hiltViewModel()
+    templateViewModel: NewTemplateViewModel = hiltViewModel(),
+    actionBack: () -> Unit,
+    navigateTo: () -> Unit
 ) {
     val state by templateViewModel.usState.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -63,9 +65,7 @@ fun NewTemplateScreen(
             },
             navigationIcon = {
                 IconButton(
-                    onClick = {
-                        outerNavController.navigateUp()
-                    }
+                    onClick = actionBack
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.round_arrow_back_24),
@@ -109,12 +109,25 @@ fun NewTemplateScreen(
         ) {
             item {
                 WideAddButton(
-                    action = {
-                        innerNavController.navigate(TemplateNavScreen.Groups.title)
-                    }
+                    action = navigateTo
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
+            items(
+                items = state.exerciseList,
+                key = {
+                    it.id
+                }
+            ) {exercise ->
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = exercise.name
+                    )
+                }
+            }
+
         }
         Button(
             modifier = Modifier.fillMaxWidth(),
@@ -130,7 +143,7 @@ fun NewTemplateScreen(
                 createButtonSentRequest.value = true
                 coroutineScope.launch {
                     templateViewModel.createTemplate()
-                    innerNavController.navigateUp()
+                    actionBack()
                 }
             }
         ) {
@@ -138,7 +151,7 @@ fun NewTemplateScreen(
                 modifier = Modifier.padding(vertical = 8.dp),
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Bold,
-                text = "Сохранить"
+                text = stringResource(R.string.save)
             )
         }
         Spacer(

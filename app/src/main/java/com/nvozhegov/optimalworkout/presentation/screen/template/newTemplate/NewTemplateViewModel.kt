@@ -2,6 +2,7 @@ package com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.nvozhegov.optimalworkout.data.model.Exercise
 import com.nvozhegov.optimalworkout.data.model.Template
 import com.nvozhegov.optimalworkout.domain.template.CreateTemplateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +20,18 @@ class NewTemplateViewModel @Inject constructor(
     val usState = _uiState.asStateFlow()
 
     fun editTitle(newTitle: String) {
-        _uiState.update { prevTitle ->
-            prevTitle.copy(
+        _uiState.update { prev ->
+            prev.copy(
                 title = newTitle
             )
+        }
+    }
+
+    fun addExercise(exercise: Exercise) {
+        _uiState.update { prev ->
+            val newTemplate = prev.copy()
+            newTemplate.exerciseList.add(exercise)
+            newTemplate
         }
     }
 
@@ -38,5 +47,6 @@ class NewTemplateViewModel @Inject constructor(
 }
 
 data class TemplateState(
-    val title: String = ""
+    val title: String = "",
+    val exerciseList: MutableList<Exercise> = mutableListOf()
 )

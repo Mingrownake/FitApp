@@ -44,7 +44,7 @@ fun GroupButton(
         ) {
             Image(
                 modifier = Modifier
-                    .size(80.dp),
+                    .size(72.dp),
                 painter = painterResource(getResourcesNameByTitle(groupName)),
                 contentDescription = groupName
             )

@@ -18,7 +18,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.GroupButton
@@ -28,8 +27,9 @@ import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewSt
 fun GroupScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
-    navController: NavController,
-    groupViewModel: GroupViewModel = hiltViewModel()
+    groupViewModel: GroupViewModel = hiltViewModel(),
+    actionBack: () -> Unit,
+    navigateTo: () -> Unit
 ) {
     val state by groupViewModel.uiState.collectAsState()
     val groupList by state.groupList.collectAsState(listOf())
@@ -38,14 +38,12 @@ fun GroupScreen(
         scaffoldViewState.value = TopBarScaffoldViewState(
             title = {
                 AppBarTitle(
-                    text = stringResource(R.string.choose_an_exercise)
+                    text = stringResource(R.string.muscle_groups)
                 )
             },
             navigationIcon = {
                 IconButton(
-                    onClick = {
-                        navController.navigateUp()
-                    }
+                    onClick = actionBack
                 ) {
                     Icon(
                         painter = painterResource(R.drawable.round_arrow_back_24),
@@ -72,9 +70,7 @@ fun GroupScreen(
             )
             GroupButton(
                 groupName = it.name,
-                onClick = {
-
-                }
+                onClick = navigateTo
             )
         }
         item {

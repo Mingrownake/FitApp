@@ -1,12 +1,13 @@
 package com.nvozhegov.optimalworkout.domain.exercise
 
 import com.nvozhegov.optimalworkout.data.model.Exercise
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllUseCase @Inject constructor (
+class GetAllExerciseUseCase @Inject constructor (
     val exerciseRepository: ExerciseRepository
 ) {
-    suspend operator fun invoke(): List<Exercise> {
+    operator fun invoke(): Flow<List<Exercise>> {
         return exerciseRepository.getAll()
     }
 }
