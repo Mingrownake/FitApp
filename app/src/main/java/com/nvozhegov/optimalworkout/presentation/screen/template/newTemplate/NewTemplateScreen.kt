@@ -32,12 +32,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.BaseOutlinedTextField
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
-import com.nvozhegov.optimalworkout.presentation.navigation.TemplateNavScreen
 import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 import kotlinx.coroutines.launch
 
@@ -46,7 +44,7 @@ import kotlinx.coroutines.launch
 fun NewTemplateScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
-    templateViewModel: NewTemplateViewModel = hiltViewModel(),
+    templateViewModel: NewTemplateViewModel,
     actionBack: () -> Unit,
     navigateTo: () -> Unit
 ) {

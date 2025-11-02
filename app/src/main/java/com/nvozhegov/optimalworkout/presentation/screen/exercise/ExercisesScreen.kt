@@ -1,7 +1,5 @@
 package com.nvozhegov.optimalworkout.presentation.screen.exercise
 
-import android.util.Log
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -10,7 +8,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
@@ -21,12 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.nvozhegov.optimalworkout.R
+import com.nvozhegov.optimalworkout.data.model.Exercise
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseButton
-import com.nvozhegov.optimalworkout.presentation.components.template.GroupButton
-import com.nvozhegov.optimalworkout.presentation.navigation.TemplateNavScreen
 import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateViewModel
 
@@ -36,7 +31,7 @@ fun ExercisesScreen(
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
     exerciseViewModel: ExerciseViewModel = hiltViewModel(),
     actionBack: () -> Unit,
-    navigateTo: () -> Unit
+    action: (Exercise) -> Unit
 ) {
     val exercisesState by exerciseViewModel.uiState.collectAsState()
     val exerciseList by exercisesState.exerciseList.collectAsState(listOf())
@@ -71,13 +66,15 @@ fun ExercisesScreen(
             key = {exercise ->
                 exercise.id
             }
-        ) {
+        ) {exercise ->
             Spacer(
                 modifier = Modifier.height(8.dp)
             )
             ExerciseButton(
-                exerciseTitle = it.name,
-                onClick = navigateTo
+                exerciseTitle = exercise.name,
+                onClick = {
+                    action(exercise)
+                }
             )
         }
         item {

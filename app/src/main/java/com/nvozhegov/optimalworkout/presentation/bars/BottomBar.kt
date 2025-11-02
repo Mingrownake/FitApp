@@ -14,7 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.nvozhegov.optimalworkout.presentation.navigation.BottomNavScreen
+import com.nvozhegov.optimalworkout.presentation.navigation.BottomNavRoute
 
 @Composable
 fun BottomBar(
@@ -25,11 +25,11 @@ fun BottomBar(
 ) {
     val backStackEntry = navController.currentBackStackEntryAsState()
     val navigationList = listOf(
-        BottomNavScreen.Profile,
-        BottomNavScreen.Templates,
-        BottomNavScreen.Workouts,
-        BottomNavScreen.Calendar,
-        BottomNavScreen.Settings
+        BottomNavRoute.Profile,
+        BottomNavRoute.Templates,
+        BottomNavRoute.Workouts,
+        BottomNavRoute.Calendar,
+        BottomNavRoute.Settings
     )
     NavigationBar(
         modifier = modifier.height(80.dp),
