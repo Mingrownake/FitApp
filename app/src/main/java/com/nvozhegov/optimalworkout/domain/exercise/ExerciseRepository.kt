@@ -5,7 +5,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface ExerciseRepository {
     fun getAll(): Flow<List<Exercise>>
-    suspend fun getById(id: Int): Exercise
+    fun getExercisesByGroupId(id: Int): Flow<List<Exercise>>
     suspend fun insert(exercise: Exercise)
     suspend fun insertAll(exercises: List<Exercise>)
 }

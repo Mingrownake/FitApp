@@ -12,13 +12,15 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import androidx.navigation.navigation
 import com.nvozhegov.optimalworkout.presentation.bars.TopBar
 import com.nvozhegov.optimalworkout.presentation.components.sharedViewModel
-import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesScreen
+import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExerciseCardScreen
 import com.nvozhegov.optimalworkout.presentation.screen.group.GroupScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateViewModel
@@ -92,7 +94,7 @@ fun TemplateNavScreen(
                         actionBack = { templateNavController.popBackStack() },
                         navigateTo = {
                             templateNavController.navigate(
-                                TemplateNavRoute.Exercise.title
+                                "${TemplateNavRoute.Exercise.title}/$it"
                             ) {
                                 launchSingleTop = true
                             }
@@ -101,13 +103,19 @@ fun TemplateNavScreen(
                 }
 
                 composable(
-                    route = TemplateNavRoute.Exercise.title
+                    route = "${TemplateNavRoute.Exercise.title}/{groupId}",
+                    arguments = listOf(navArgument("groupId") {
+                        type = NavType.IntType
+                        nullable = false
+                    })
                 ) {entry ->
                     val newTemplateViewModel = entry.sharedViewModel<NewTemplateViewModel>(
                         templateNavController
                     )
-                    ExercisesScreen(
+                    val groupId = entry.arguments?.getInt("groupId")
+                    ExerciseCardScreen(
                         scaffoldViewState = scaffoldState,
+                        groupId = groupId!!,
                         actionBack = {
                             templateNavController.popBackStack()
                         },

@@ -1,5 +1,6 @@
 package com.nvozhegov.optimalworkout.presentation.screen.exercise
 
+import android.util.Log
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -23,18 +24,20 @@ import com.nvozhegov.optimalworkout.data.model.Exercise
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseButton
 import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
-import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateViewModel
 
 @Composable
-fun ExercisesScreen(
+fun ExerciseCardScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
-    exerciseViewModel: ExerciseViewModel = hiltViewModel(),
+    groupId: Int,
+    exerciseViewModel: ExerciseCardViewModel =
+        hiltViewModel<ExerciseCardViewModel, ExerciseCardViewModel.ExerciseCardFactory> { factory ->
+        factory.create(groupId)
+    },
     actionBack: () -> Unit,
     action: (Exercise) -> Unit
 ) {
     val exercisesState by exerciseViewModel.uiState.collectAsState()
-    val exerciseList by exercisesState.exerciseList.collectAsState(listOf())
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = TopBarScaffoldViewState(
@@ -54,33 +57,42 @@ fun ExercisesScreen(
                 }
             }
         )
+        Log.d("ExerciseCardScreen", "$groupId")
     }
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-    ) {
-        items(
-            items = exerciseList,
-            key = {exercise ->
-                exercise.id
-            }
-        ) {exercise ->
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-            ExerciseButton(
-                exerciseTitle = exercise.name,
-                onClick = {
-                    action(exercise)
-                }
-            )
+    when (val currentExercisesState = exercisesState) {
+        ExerciseCardState.Finishing -> {
+            actionBack()
         }
-        item {
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
+
+        is ExerciseCardState.Selecting -> {
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                items(
+                    items = currentExercisesState.exerciseList,
+                    key = { exercise ->
+                        exercise.id
+                    }
+                ) { exercise ->
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                    ExerciseButton(
+                        exerciseTitle = exercise.name,
+                        onClick = {
+                            action(exercise)
+                        }
+                    )
+                }
+                item {
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                }
+            }
         }
     }
 }

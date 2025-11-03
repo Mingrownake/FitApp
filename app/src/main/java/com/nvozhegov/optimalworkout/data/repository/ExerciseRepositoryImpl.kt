@@ -13,8 +13,8 @@ class ExerciseRepositoryImpl @Inject constructor(
         return exerciseDao.getAll()
     }
 
-    override suspend fun getById(id: Int): Exercise {
-        return exerciseDao.getById(id)
+    override fun getExercisesByGroupId(id: Int): Flow<List<Exercise>> {
+        return exerciseDao.getExercisesByGroupId(id)
     }
 
     override suspend fun insert(exercise: Exercise) {

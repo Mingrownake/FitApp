@@ -125,7 +125,6 @@ fun NewTemplateScreen(
                     )
                 }
             }
-
         }
         Button(
             modifier = Modifier.fillMaxWidth(),

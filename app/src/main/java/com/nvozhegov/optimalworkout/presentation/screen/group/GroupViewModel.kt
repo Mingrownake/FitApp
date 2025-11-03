@@ -5,10 +5,14 @@ import androidx.lifecycle.viewModelScope
 import com.nvozhegov.optimalworkout.data.model.Group
 import com.nvozhegov.optimalworkout.domain.group.GetAllGroupsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,23 +21,36 @@ import javax.inject.Inject
 class GroupViewModel @Inject constructor(
     private val getAllGroupsUseCase: GetAllGroupsUseCase
 ): ViewModel() {
-    private val _uiState = MutableStateFlow(GroupsState(
-        flowOf()
-    ))
+    private val _uiState = MutableStateFlow<GroupsState>(
+        GroupsState.Selecting(listOf())
+    )
     val uiState = _uiState.asStateFlow()
+    val coroutineScope = CoroutineScope(Dispatchers.IO)
 
     init {
-        viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    groupList = getAllGroupsUseCase()
-                )
+        when (_uiState.value) {
+            GroupsState.Finishing -> {
+                _uiState.update { prevState ->
+                    prevState
+                }
+            }
+            is GroupsState.Selecting -> {
+                getAllGroupsUseCase().onEach {list ->
+                    _uiState.update { prev ->
+                        GroupsState.Selecting(
+                            groupList = list
+                        )
+                    }
+                }.launchIn(coroutineScope)
             }
         }
-
     }
 }
 
-data class GroupsState(
-    val groupList: Flow<List<Group>>
-)
+sealed interface GroupsState {
+    data class Selecting(
+        val groupList: List<Group>
+    ) : GroupsState
+
+    data object Finishing: GroupsState
+}

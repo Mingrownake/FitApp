@@ -29,10 +29,9 @@ fun GroupScreen(
     scaffoldViewState: MutableState<TopBarScaffoldViewState>,
     groupViewModel: GroupViewModel = hiltViewModel(),
     actionBack: () -> Unit,
-    navigateTo: () -> Unit
+    navigateTo: (Int) -> Unit
 ) {
     val state by groupViewModel.uiState.collectAsState()
-    val groupList by state.groupList.collectAsState(listOf())
 
     LaunchedEffect(Unit) {
         scaffoldViewState.value = TopBarScaffoldViewState(
@@ -53,30 +52,38 @@ fun GroupScreen(
             }
         )
     }
-
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-    ) {
-        items(
-            items = groupList,
-            key = {group ->
-                group.id
-            }
-        ) {
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-            GroupButton(
-                groupName = it.name,
-                onClick = navigateTo
-            )
+    when (val currentState = state) {
+        GroupsState.Finishing -> {
+            actionBack()
         }
-        item {
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
+        is GroupsState.Selecting -> {
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                items(
+                    items = currentState.groupList,
+                    key = {group ->
+                        group.id
+                    }
+                ) {group ->
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                    GroupButton(
+                        groupName = group.name,
+                        onClick = {
+                            navigateTo(group.id)
+                        }
+                    )
+                }
+                item {
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                }
+            }
         }
     }
 }
