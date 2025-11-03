@@ -33,7 +33,7 @@ fun MainNavScreen(
     val currentTitleScreen= backStackEntry?.destination?.route ?: BottomNavRoute.Workouts.title
 
     val scaffoldState = remember {
-        mutableStateOf(TopBarScaffoldViewState())
+        mutableStateOf(BarScaffoldViewState())
     }
 
     Scaffold(

@@ -32,21 +32,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import androidx.navigation.NavController
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.data.model.Template
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.ModalBottomSheetButton
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
 import com.nvozhegov.optimalworkout.presentation.components.template.SelectButtonTemplate
-import com.nvozhegov.optimalworkout.presentation.navigation.AppScreen
-import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TemplatesScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<TopBarScaffoldViewState>,
+    scaffoldViewState: MutableState<BarScaffoldViewState>,
     templatesViewModel: TemplatesViewModel = hiltViewModel(),
     navigateTo: () -> Unit
 ) {
@@ -62,7 +60,7 @@ fun TemplatesScreen(
     }
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = TopBarScaffoldViewState(
+        scaffoldViewState.value = BarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.templates)

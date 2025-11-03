@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonColors
@@ -31,19 +31,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.BaseOutlinedTextField
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
-import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewTemplateScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<TopBarScaffoldViewState>,
+    scaffoldViewState: MutableState<BarScaffoldViewState>,
     templateViewModel: NewTemplateViewModel,
     actionBack: () -> Unit,
     navigateTo: () -> Unit
@@ -55,7 +54,7 @@ fun NewTemplateScreen(
     }
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = TopBarScaffoldViewState(
+        scaffoldViewState.value = BarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.new_template)
@@ -111,12 +110,12 @@ fun NewTemplateScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
             }
-            items(
+            itemsIndexed(
                 items = state.exerciseList,
-                key = {
-                    it.id
+                key = {index, exercise ->
+                    "${exercise.id}_$index"
                 }
-            ) {exercise ->
+            ) {_, exercise ->
                 Row(
                     modifier = Modifier.fillMaxWidth()
                 ) {

@@ -1,39 +1,41 @@
 package com.nvozhegov.optimalworkout.presentation.components.template
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.nvozhegov.optimalworkout.R
+import com.nvozhegov.optimalworkout.data.model.Exercise
 
 @Composable
 fun ExerciseButton(
     modifier: Modifier = Modifier,
-    exerciseTitle: String,
-    onClick: () -> Unit
+    exercise: Exercise,
+    action: () -> Unit
 ) {
+    var checked by rememberSaveable { mutableStateOf(false) }
     Button(
-        shape = RoundedCornerShape(8.dp),
+        contentPadding = ButtonDefaults.TextButtonContentPadding,
+        shape = RoundedCornerShape(4.dp),
         modifier = modifier
-            .fillMaxWidth()
-            .border(
-                1.dp,
-                color = MaterialTheme.colorScheme.secondary,
-                shape = RoundedCornerShape(8.dp)
-            ),
-        onClick = onClick
+            .fillMaxWidth(),
+        onClick = {
+            // TODO может сделать переход на информацию о упражнении
+        }
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically
@@ -41,11 +43,14 @@ fun ExerciseButton(
             Text(
                 modifier = Modifier.weight(1f),
                 fontWeight = FontWeight.Bold,
-                text = exerciseTitle,
+                text = exercise.name,
             )
-            Icon(
-                painter = painterResource(R.drawable.round_arrow_right_24),
-                contentDescription = "Select exercise"
+            Checkbox(
+                checked = checked,
+                onCheckedChange = {
+                    checked = it
+                    action()
+                }
             )
         }
     }

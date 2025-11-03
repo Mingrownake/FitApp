@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface GroupDao {
-    @Query("select * from `groups`")
+    @Query("select * from `groups` order by name")
     fun getAllGroups(): Flow<List<Group>>
 
     @Transaction

@@ -21,12 +21,12 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.GroupButton
-import com.nvozhegov.optimalworkout.presentation.navigation.TopBarScaffoldViewState
+import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState
 
 @Composable
 fun GroupScreen(
     modifier: Modifier = Modifier,
-    scaffoldViewState: MutableState<TopBarScaffoldViewState>,
+    scaffoldViewState: MutableState<BarScaffoldViewState>,
     groupViewModel: GroupViewModel = hiltViewModel(),
     actionBack: () -> Unit,
     navigateTo: (Int) -> Unit
@@ -34,7 +34,7 @@ fun GroupScreen(
     val state by groupViewModel.uiState.collectAsState()
 
     LaunchedEffect(Unit) {
-        scaffoldViewState.value = TopBarScaffoldViewState(
+        scaffoldViewState.value = BarScaffoldViewState(
             title = {
                 AppBarTitle(
                     text = stringResource(R.string.muscle_groups)

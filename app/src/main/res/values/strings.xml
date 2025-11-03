@@ -17,4 +17,8 @@
     <string name="muscle_groups">Muscle groups</string>
     <string name="workouts">Workouts</string>
     <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="exercise_word_single">exercise</string>
+    <string name="exercises_two_to_four">exercises</string>
+    <string name="exercises_over_five">exercises</string>
 </resources>

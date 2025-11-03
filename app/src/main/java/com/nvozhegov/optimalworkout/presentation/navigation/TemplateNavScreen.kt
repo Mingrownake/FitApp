@@ -32,7 +32,7 @@ fun TemplateNavScreen(
 ) {
     val templateNavController = rememberNavController()
     val scaffoldState = remember {
-        mutableStateOf(TopBarScaffoldViewState())
+        mutableStateOf(BarScaffoldViewState())
     }
 
     Scaffold(
@@ -43,8 +43,11 @@ fun TemplateNavScreen(
                 navigationIcon = scaffoldState.value.navigationIcon,
                 actionButton = scaffoldState.value.actionButton
             )
-        }
-    ) {innerPadding ->
+        },
+        floatingActionButton = scaffoldState.value.floatingButton
+
+
+    ) { innerPadding ->
         NavHost(
             navController = templateNavController,
             modifier = Modifier
@@ -68,7 +71,7 @@ fun TemplateNavScreen(
             ) {
                 composable(
                     route = TemplateNavRoute.NewTemplate.title
-                ) {entry ->
+                ) { entry ->
                     val newTemplateViewModel = entry.sharedViewModel<NewTemplateViewModel>(
                         templateNavController
                     )
@@ -108,7 +111,7 @@ fun TemplateNavScreen(
                         type = NavType.IntType
                         nullable = false
                     })
-                ) {entry ->
+                ) { entry ->
                     val newTemplateViewModel = entry.sharedViewModel<NewTemplateViewModel>(
                         templateNavController
                     )
@@ -119,8 +122,8 @@ fun TemplateNavScreen(
                         actionBack = {
                             templateNavController.popBackStack()
                         },
-                        action = {exercise ->
-                            newTemplateViewModel.addExercise(exercise)
+                        action = { exercise ->
+                            //newTemplateViewModel.addExercise(exercise)
                         }
                     )
                 }

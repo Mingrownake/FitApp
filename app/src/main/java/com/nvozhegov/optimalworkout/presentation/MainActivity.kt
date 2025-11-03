@@ -10,6 +10,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.lifecycleScope
 import com.example.compose.OptimalWorkoutTheme
 import com.nvozhegov.optimalworkout.R
+import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseButton
 import com.nvozhegov.optimalworkout.presentation.components.template.GroupButton
 import com.nvozhegov.optimalworkout.presentation.components.template.SelectButtonTemplate
 import com.nvozhegov.optimalworkout.presentation.navigation.Navigation
@@ -40,10 +41,4 @@ class MainActivity : ComponentActivity() {
 @Preview()
 @Composable
 fun PreviewComposable() {
-    GroupButton(
-        groupName = "Chest",
-        onClick = {
-
-        }
-    )
 }

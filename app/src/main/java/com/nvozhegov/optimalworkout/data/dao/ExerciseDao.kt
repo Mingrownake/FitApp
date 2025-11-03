@@ -11,7 +11,7 @@ interface ExerciseDao {
     @Query("SELECT * FROM exercises")
     fun getAll(): Flow<List<Exercise>>
 
-    @Query("SELECT * FROM exercises where group_id = :groupId")
+    @Query("SELECT * FROM exercises where group_id = :groupId order by name")
     fun getExercisesByGroupId(groupId: Int): Flow<List<Exercise>>
 
     @Insert
