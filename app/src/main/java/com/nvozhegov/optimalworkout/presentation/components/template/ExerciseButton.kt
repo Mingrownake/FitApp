@@ -34,7 +34,8 @@ fun ExerciseButton(
         modifier = modifier
             .fillMaxWidth(),
         onClick = {
-            // TODO может сделать переход на информацию о упражнении
+            action()
+            checked = !checked
         }
     ) {
         Row(

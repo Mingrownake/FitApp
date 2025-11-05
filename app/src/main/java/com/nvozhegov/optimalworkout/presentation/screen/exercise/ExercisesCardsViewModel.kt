@@ -3,7 +3,6 @@ package com.nvozhegov.optimalworkout.presentation.screen.exercise
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nvozhegov.optimalworkout.data.model.Exercise
-import com.nvozhegov.optimalworkout.domain.exercise.GetAllExerciseUseCase
 import com.nvozhegov.optimalworkout.domain.exercise.GetExercisesByGroupIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
@@ -18,15 +17,15 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-@HiltViewModel(assistedFactory = ExerciseCardViewModel.ExerciseCardFactory::class)
-class ExerciseCardViewModel @AssistedInject constructor(
+@HiltViewModel(assistedFactory = ExercisesCardsViewModel.ExerciseCardFactory::class)
+class ExercisesCardsViewModel @AssistedInject constructor(
     @Assisted("groupId") groupId: Int,
     private val getExercisesByGroupIdUseCase: GetExercisesByGroupIdUseCase
 ) : ViewModel() {
 
     @AssistedFactory
     interface ExerciseCardFactory {
-        fun create(@Assisted("groupId") groupId: Int): ExerciseCardViewModel
+        fun create(@Assisted("groupId") groupId: Int): ExercisesCardsViewModel
     }
     private val _uiState = MutableStateFlow<ExerciseCardState>(
         ExerciseCardState.Selecting(listOf())

@@ -1,5 +1,6 @@
 package com.nvozhegov.optimalworkout.presentation.navigation
 
+import android.widget.Toast
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
@@ -11,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -18,9 +20,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import androidx.navigation.navigation
+import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.bars.TopBar
 import com.nvozhegov.optimalworkout.presentation.components.sharedViewModel
-import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExerciseCardScreen
+import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesCardsScreen
 import com.nvozhegov.optimalworkout.presentation.screen.group.GroupScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateViewModel
@@ -30,6 +33,7 @@ fun TemplateNavScreen(
     modifier: Modifier = Modifier,
     navController: NavController
 ) {
+    val context = LocalContext.current
     val templateNavController = rememberNavController()
     val scaffoldState = remember {
         mutableStateOf(BarScaffoldViewState())
@@ -116,14 +120,16 @@ fun TemplateNavScreen(
                         templateNavController
                     )
                     val groupId = entry.arguments?.getInt("groupId")
-                    ExerciseCardScreen(
+                    ExercisesCardsScreen(
                         scaffoldViewState = scaffoldState,
                         groupId = groupId!!,
                         actionBack = {
                             templateNavController.popBackStack()
                         },
-                        action = { exercise ->
-                            //newTemplateViewModel.addExercise(exercise)
+                        action = { exerciseList ->
+                            newTemplateViewModel.addExercises(exerciseList)
+                            Toast.makeText(context,
+                                context.getString(R.string.added, exerciseList.size), Toast.LENGTH_SHORT).show()
                         }
                     )
                 }

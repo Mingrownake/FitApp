@@ -21,4 +21,5 @@
     <string name="exercise_word_single">exercise</string>
     <string name="exercises_two_to_four">exercises</string>
     <string name="exercises_over_five">exercises</string>
+    <string name="added">Added: %1$d</string>
 </resources>

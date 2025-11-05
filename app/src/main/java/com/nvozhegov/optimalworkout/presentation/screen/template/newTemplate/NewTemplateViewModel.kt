@@ -27,10 +27,12 @@ class NewTemplateViewModel @Inject constructor(
         }
     }
 
-    fun addExercise(exercise: Exercise) {
+    fun addExercises(exerciseList: List<Exercise>) {
         _uiState.update { prev ->
             val newTemplate = prev.copy()
-            newTemplate.exerciseList.add(exercise)
+            exerciseList.forEach {
+                newTemplate.exerciseList.add(it)
+            }
             newTemplate
         }
     }

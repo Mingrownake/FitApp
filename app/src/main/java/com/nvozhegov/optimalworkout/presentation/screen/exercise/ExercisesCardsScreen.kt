@@ -9,13 +9,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.ExtendedFloatingActionButton
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.LargeFloatingActionButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,10 +20,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -39,20 +34,20 @@ import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseBut
 import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState
 
 @Composable
-fun ExerciseCardScreen(
+fun ExercisesCardsScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<BarScaffoldViewState>,
     groupId: Int,
-    exerciseViewModel: ExerciseCardViewModel =
-        hiltViewModel<ExerciseCardViewModel, ExerciseCardViewModel.ExerciseCardFactory> { factory ->
+    exerciseViewModel: ExercisesCardsViewModel =
+        hiltViewModel<ExercisesCardsViewModel, ExercisesCardsViewModel.ExerciseCardFactory> { factory ->
         factory.create(groupId)
     },
     actionBack: () -> Unit,
     action: (List<Exercise>) -> Unit
 ) {
     val exercisesState by exerciseViewModel.uiState.collectAsState()
-    var selectedExercises by rememberSaveable{
-        mutableStateOf(listOf<Exercise>())
+    val selectedExercises = remember {
+        mutableStateListOf<Exercise>()
     }
 
 
@@ -81,7 +76,8 @@ fun ExerciseCardScreen(
                             .offset(x = 16.dp)
                             .padding(horizontal = 16.dp),
                         onClick = {
-
+                            action(selectedExercises)
+                            actionBack()
                         },
                         shape = FloatingActionButtonDefaults.smallShape,
                         containerColor = MaterialTheme.colorScheme.onPrimary,
@@ -131,12 +127,10 @@ fun ExerciseCardScreen(
                         ExerciseButton(
                             exercise = exercise,
                             action = {
-                                if(selectedExercises.contains(exercise)) {
-                                    selectedExercises = selectedExercises.filter {
-                                        it != exercise
-                                    }
+                                if (selectedExercises.contains(exercise)) {
+                                    selectedExercises.remove(exercise)
                                 } else {
-                                    selectedExercises = selectedExercises + exercise
+                                    selectedExercises.add(exercise)
                                 }
                             }
                         )
