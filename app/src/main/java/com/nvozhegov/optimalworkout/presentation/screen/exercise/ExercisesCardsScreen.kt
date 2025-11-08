@@ -118,7 +118,7 @@ fun ExercisesCardsScreen(
                     items(
                         items = currentExercisesState.exerciseList,
                         key = { exercise ->
-                            exercise.id
+                            exercise.exerciseId
                         }
                     ) { exercise ->
                         Spacer(

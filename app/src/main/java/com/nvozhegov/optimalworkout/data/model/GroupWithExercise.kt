@@ -6,7 +6,7 @@ import androidx.room.Relation
 data class GroupWithExercise(
     @Embedded val group: Group,
     @Relation(
-        parentColumn = "id",
+        parentColumn = "group_id",
         entityColumn = "group_id"
     )
     val exerciseList: List<Exercise>

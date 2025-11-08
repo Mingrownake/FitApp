@@ -9,13 +9,15 @@ import com.nvozhegov.optimalworkout.data.dao.WorkoutTemplateDao
 import com.nvozhegov.optimalworkout.data.model.Exercise
 import com.nvozhegov.optimalworkout.data.model.Group
 import com.nvozhegov.optimalworkout.data.model.Template
+import com.nvozhegov.optimalworkout.data.model.TemplateExerciseCrossRef
 import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
 
 @Database(entities = [
     Exercise::class,
     Group::class,
     WorkoutTemplate::class,
-    Template::class],
+    Template::class,
+    TemplateExerciseCrossRef::class],
     version = 1,
     exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {

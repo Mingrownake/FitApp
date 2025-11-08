@@ -6,7 +6,7 @@ import javax.inject.Inject
 class CreateTemplateUseCase @Inject constructor(
     val templateRepository: TemplateRepository
 ) {
-    suspend operator fun invoke(template: Template) {
-        templateRepository.create(template)
+    suspend operator fun invoke(template: Template): Int {
+        return templateRepository.create(template)
     }
 }

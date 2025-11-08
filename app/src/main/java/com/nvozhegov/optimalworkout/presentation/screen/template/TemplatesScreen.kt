@@ -93,7 +93,7 @@ fun TemplatesScreen(
                     title = stringResource(R.string.edit),
                     iconId = R.drawable.outline_edit_24,
                     onClick = {
-                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.id}")
+                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.templateId}")
                     }
                 )
                 ModalBottomSheetButton(
@@ -101,7 +101,7 @@ fun TemplatesScreen(
                     iconId = R.drawable.round_delete_24,
                     color = Color.Red,
                     onClick = {
-                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.id}")
+                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.templateId}")
                     }
                 )
             }
@@ -125,7 +125,7 @@ fun TemplatesScreen(
         items(
             templateList,
             key = {template ->
-                template.id
+                template.templateId
             }
         ) {template ->
             SelectButtonTemplate(

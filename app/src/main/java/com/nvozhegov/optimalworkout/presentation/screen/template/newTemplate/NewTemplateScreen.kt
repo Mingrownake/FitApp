@@ -1,7 +1,6 @@
 package com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -34,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import com.nvozhegov.optimalworkout.R
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.BaseOutlinedTextField
+import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseCard
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
 import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState
 import kotlinx.coroutines.launch
@@ -113,16 +113,19 @@ fun NewTemplateScreen(
             itemsIndexed(
                 items = state.exerciseList,
                 key = {index, exercise ->
-                    "${exercise.id}_$index"
+                    "${exercise.exerciseId}_$index"
                 }
             ) {_, exercise ->
-                Row(
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Text(
-                        text = exercise.name
-                    )
-                }
+                ExerciseCard(
+                    modifier = Modifier.fillMaxWidth().animateItem(),
+                    exercise = exercise,
+                    deleteAction = {
+                        templateViewModel.removeExercise(exercise)
+                    }
+                )
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
             }
         }
         Button(
@@ -138,7 +141,10 @@ fun NewTemplateScreen(
             onClick = {
                 createButtonSentRequest.value = true
                 coroutineScope.launch {
-                    templateViewModel.createTemplate()
+                    val newTemplateId = templateViewModel.createTemplate()
+                    state.exerciseList.forEach {exercise ->
+                        templateViewModel.createCrossRef(newTemplateId, exercise.exerciseId)
+                    }
                     actionBack()
                 }
             }
