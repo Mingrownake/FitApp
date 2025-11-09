@@ -1,7 +1,7 @@
 package com.nvozhegov.optimalworkout.data.repository
 
 import com.nvozhegov.optimalworkout.data.dao.ExerciseDao
-import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
 import com.nvozhegov.optimalworkout.domain.exercise.ExerciseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

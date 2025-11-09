@@ -28,7 +28,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nvozhegov.optimalworkout.R
-import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.ExerciseButton
 import com.nvozhegov.optimalworkout.presentation.navigation.BarScaffoldViewState

@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
+import com.nvozhegov.optimalworkout.data.model.entity.WorkoutTemplate
 
 @Dao
 interface WorkoutTemplateDao {

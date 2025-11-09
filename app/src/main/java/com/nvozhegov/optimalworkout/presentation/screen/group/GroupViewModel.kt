@@ -1,20 +1,16 @@
 package com.nvozhegov.optimalworkout.presentation.screen.group
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.nvozhegov.optimalworkout.data.model.Group
+import com.nvozhegov.optimalworkout.data.model.entity.Group
 import com.nvozhegov.optimalworkout.domain.group.GetAllGroupsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel

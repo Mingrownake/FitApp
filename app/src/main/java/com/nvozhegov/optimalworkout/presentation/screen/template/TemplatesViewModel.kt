@@ -2,10 +2,9 @@ package com.nvozhegov.optimalworkout.presentation.screen.template
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nvozhegov.optimalworkout.data.model.Template
-import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
+import com.nvozhegov.optimalworkout.data.model.entity.Template
+import com.nvozhegov.optimalworkout.domain.template.DeleteTemplateUseCase
 import com.nvozhegov.optimalworkout.domain.template.GetAllTemplatesUseCase
-import com.nvozhegov.optimalworkout.domain.workoutTemplate.GetAllWorkoutTemplateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,24 +17,44 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TemplatesViewModel @Inject constructor(
-    getAllTemplatesUseCase: GetAllTemplatesUseCase
+    val getAllTemplatesUseCase: GetAllTemplatesUseCase,
+    val deleteTemplateUseCase: DeleteTemplateUseCase
 ): ViewModel() {
-    private val _uiState = MutableStateFlow(TemplatesState(
+    private val _uiState = MutableStateFlow<TemplatesState>(TemplatesState.Viewing(
         flowOf()
     ))
     val uiState = _uiState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            _uiState.update {
-                it.copy(
-                    templateList = getAllTemplatesUseCase()
-                )
+            _uiState.update {templatesState ->
+                when (templatesState) {
+                    is TemplatesState.Viewing -> {
+                        templatesState.copy(
+                            templateList = getAllTemplatesUseCase()
+                        )
+                    }
+                }
             }
         }
     }
+
+     fun deleteTemplate(template: Template) {
+         viewModelScope.launch {
+             _uiState.update { templatesState ->
+                 when (templatesState) {
+                     is TemplatesState.Viewing -> {
+                         deleteTemplateUseCase(template)
+                         templatesState.copy(
+                             templateList = getAllTemplatesUseCase()
+                         )
+                     }
+                 }
+             }
+         }
+    }
 }
 
-data class TemplatesState(
-    val templateList: Flow<List<Template>>
-)
+sealed interface TemplatesState {
+    data class Viewing(val templateList: Flow<List<Template>>) : TemplatesState
+}

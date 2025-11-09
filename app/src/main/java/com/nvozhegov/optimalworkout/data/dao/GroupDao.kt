@@ -3,8 +3,8 @@ package com.nvozhegov.optimalworkout.data.dao
 import androidx.room.Dao
 import androidx.room.Query
 import androidx.room.Transaction
-import com.nvozhegov.optimalworkout.data.model.Group
-import com.nvozhegov.optimalworkout.data.model.GroupWithExercise
+import com.nvozhegov.optimalworkout.data.model.entity.Group
+import com.nvozhegov.optimalworkout.data.model.relationModel.GroupWithExercise
 import kotlinx.coroutines.flow.Flow
 
 @Dao

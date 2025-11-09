@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,18 +26,28 @@ import com.nvozhegov.optimalworkout.presentation.bars.TopBar
 import com.nvozhegov.optimalworkout.presentation.components.sharedViewModel
 import com.nvozhegov.optimalworkout.presentation.screen.exercise.ExercisesCardsScreen
 import com.nvozhegov.optimalworkout.presentation.screen.group.GroupScreen
+import com.nvozhegov.optimalworkout.presentation.screen.template.editTemplate.EditTemplateScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateScreen
 import com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate.NewTemplateViewModel
 
 @Composable
 fun TemplateNavScreen(
     modifier: Modifier = Modifier,
-    navController: NavController
+    navController: NavController,
+    startDestination: String?
 ) {
     val context = LocalContext.current
     val templateNavController = rememberNavController()
     val scaffoldState = remember {
         mutableStateOf(BarScaffoldViewState())
+    }
+
+    LaunchedEffect(startDestination) {
+        if (startDestination != null && startDestination != TemplateNavRoute.NewTemplate.title) {
+            templateNavController.navigate(startDestination) {
+                popUpTo(TemplateNavRoute.NewTemplate.title) { inclusive = false }
+            }
+        }
     }
 
     Scaffold(
@@ -91,6 +102,12 @@ fun TemplateNavScreen(
                         },
                         templateViewModel = newTemplateViewModel
                     )
+                }
+
+                composable(
+                    route = TemplateNavRoute.EditTemplate.title
+                ) {entry ->
+                    EditTemplateScreen()
                 }
 
                 composable(

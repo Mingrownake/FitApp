@@ -3,9 +3,7 @@ package com.nvozhegov.optimalworkout.presentation.navigation
 import kotlinx.serialization.Serializable
 
 
-sealed interface AppScreen {
-    @Serializable
-    data object Main: AppScreen
-    @Serializable
-    data object Template: AppScreen
+sealed class AppScreen(val title: String) {
+    data object Main: AppScreen("main")
+    data object Template: AppScreen("template")
 }

@@ -1,6 +1,6 @@
 package com.nvozhegov.optimalworkout.domain.template
 
-import com.nvozhegov.optimalworkout.data.model.Template
+import com.nvozhegov.optimalworkout.data.model.entity.Template
 import javax.inject.Inject
 
 class CreateTemplateUseCase @Inject constructor(

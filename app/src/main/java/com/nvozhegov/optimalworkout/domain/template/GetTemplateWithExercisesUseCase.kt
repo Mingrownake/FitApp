@@ -1,6 +1,6 @@
 package com.nvozhegov.optimalworkout.domain.template
 
-import com.nvozhegov.optimalworkout.data.model.TemplateWithExercise
+import com.nvozhegov.optimalworkout.data.model.relationModel.TemplateWithExercise
 import kotlinx.coroutines.flow.Flow
 
 class GetTemplateWithExercisesUseCase(

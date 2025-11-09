@@ -1,9 +1,8 @@
 package com.nvozhegov.optimalworkout.presentation.screen.template.newTemplate
 
 import androidx.lifecycle.ViewModel
-import com.nvozhegov.optimalworkout.data.model.Exercise
-import com.nvozhegov.optimalworkout.data.model.Template
-import com.nvozhegov.optimalworkout.data.model.TemplateExerciseCrossRef
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Template
 import com.nvozhegov.optimalworkout.domain.template.CreateTemplateCrossRefUseCase
 import com.nvozhegov.optimalworkout.domain.template.CreateTemplateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

@@ -1,9 +1,8 @@
 package com.nvozhegov.optimalworkout.data.repository
 
 import com.nvozhegov.optimalworkout.data.dao.TemplateDao
-import com.nvozhegov.optimalworkout.data.model.Template
-import com.nvozhegov.optimalworkout.data.model.TemplateExerciseCrossRef
-import com.nvozhegov.optimalworkout.data.model.TemplateWithExercise
+import com.nvozhegov.optimalworkout.data.model.entity.Template
+import com.nvozhegov.optimalworkout.data.model.relationModel.TemplateWithExercise
 import com.nvozhegov.optimalworkout.domain.template.TemplateRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -16,6 +15,12 @@ class TemplateRepositoryImpl @Inject constructor(
     override suspend fun create(template: Template): Int {
         return withContext(Dispatchers.IO) {
             templateDao.create(template).toInt()
+        }
+    }
+
+    override suspend fun delete(template: Template) {
+        withContext(Dispatchers.IO) {
+            templateDao.delete(template)
         }
     }
 

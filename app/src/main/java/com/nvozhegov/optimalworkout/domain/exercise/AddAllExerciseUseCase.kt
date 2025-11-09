@@ -1,6 +1,6 @@
 package com.nvozhegov.optimalworkout.domain.exercise
 
-import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
 import javax.inject.Inject
 
 class AddAllExerciseUseCase@Inject constructor (

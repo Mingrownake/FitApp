@@ -1,6 +1,6 @@
 package com.nvozhegov.optimalworkout.domain.group
 
-import com.nvozhegov.optimalworkout.data.model.Group
+import com.nvozhegov.optimalworkout.data.model.entity.Group
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

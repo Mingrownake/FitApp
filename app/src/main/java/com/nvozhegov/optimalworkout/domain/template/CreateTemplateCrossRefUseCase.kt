@@ -1,7 +1,5 @@
 package com.nvozhegov.optimalworkout.domain.template
 
-import com.nvozhegov.optimalworkout.data.model.Template
-import com.nvozhegov.optimalworkout.data.model.TemplateExerciseCrossRef
 import javax.inject.Inject
 
 class CreateTemplateCrossRefUseCase @Inject constructor(

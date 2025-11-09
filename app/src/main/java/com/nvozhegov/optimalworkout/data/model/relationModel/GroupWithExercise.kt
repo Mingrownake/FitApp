@@ -1,7 +1,9 @@
-package com.nvozhegov.optimalworkout.data.model
+package com.nvozhegov.optimalworkout.data.model.relationModel
 
 import androidx.room.Embedded
 import androidx.room.Relation
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Group
 
 data class GroupWithExercise(
     @Embedded val group: Group,

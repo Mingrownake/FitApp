@@ -33,7 +33,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.nvozhegov.optimalworkout.R
-import com.nvozhegov.optimalworkout.data.model.Template
+import com.nvozhegov.optimalworkout.data.model.entity.Template
 import com.nvozhegov.optimalworkout.presentation.components.AppBarTitle
 import com.nvozhegov.optimalworkout.presentation.components.template.ModalBottomSheetButton
 import com.nvozhegov.optimalworkout.presentation.components.template.WideAddButton
@@ -46,14 +46,14 @@ fun TemplatesScreen(
     modifier: Modifier = Modifier,
     scaffoldViewState: MutableState<BarScaffoldViewState>,
     templatesViewModel: TemplatesViewModel = hiltViewModel(),
-    navigateTo: () -> Unit
+    navigateToCreateScreen: () -> Unit,
+    navigateToEditScreen: () -> Unit
 ) {
     val state by templatesViewModel.uiState.collectAsState()
-    val templateList by state.templateList.collectAsState(listOf())
+    val coroutineScope = rememberCoroutineScope()
 
     var showBottomSheet by remember { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState()
-    val coroutineScope = rememberCoroutineScope()
 
     var selectedTemplate: Template? by remember {
         mutableStateOf(null)
@@ -93,7 +93,8 @@ fun TemplatesScreen(
                     title = stringResource(R.string.edit),
                     iconId = R.drawable.outline_edit_24,
                     onClick = {
-                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.templateId}")
+                        showBottomSheet = false
+                        navigateToEditScreen()
                     }
                 )
                 ModalBottomSheetButton(
@@ -101,43 +102,52 @@ fun TemplatesScreen(
                     iconId = R.drawable.round_delete_24,
                     color = Color.Red,
                     onClick = {
-                        Log.d("TemplatesScreen", "Id: ${selectedTemplate?.templateId}")
+                        selectedTemplate?.let {
+                            templatesViewModel.deleteTemplate(it)
+                            showBottomSheet = false
+                        }
                     }
                 )
             }
 
         }
     }
-
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-    ) {
-        item {
-            WideAddButton(
-                action = navigateTo
+    when (val currentState = state) {
+        is TemplatesState.Viewing -> {
+            val templateList by currentState.templateList.collectAsState(
+                listOf()
             )
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
-        }
-        items(
-            templateList,
-            key = {template ->
-                template.templateId
-            }
-        ) {template ->
-            SelectButtonTemplate(
-                templateName = template.title,
-                onClick = {
-                    selectedTemplate = template
-                    showBottomSheet = true
+            LazyColumn(
+                modifier = modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+            ) {
+                item {
+                    WideAddButton(
+                        action = navigateToCreateScreen
+                    )
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
                 }
-            )
-            Spacer(
-                modifier = Modifier.height(8.dp)
-            )
+                items(
+                    templateList,
+                    key = {template ->
+                        template.templateId
+                    }
+                ) {template ->
+                    SelectButtonTemplate(
+                        templateName = template.title,
+                        onClick = {
+                            selectedTemplate = template
+                            showBottomSheet = true
+                        }
+                    )
+                    Spacer(
+                        modifier = Modifier.height(8.dp)
+                    )
+                }
+            }
         }
     }
 }

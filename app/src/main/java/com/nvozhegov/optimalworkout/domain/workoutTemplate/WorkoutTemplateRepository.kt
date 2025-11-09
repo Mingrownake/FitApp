@@ -1,7 +1,6 @@
 package com.nvozhegov.optimalworkout.domain.workoutTemplate
 
-import com.nvozhegov.optimalworkout.data.model.Exercise
-import com.nvozhegov.optimalworkout.data.model.WorkoutTemplate
+import com.nvozhegov.optimalworkout.data.model.entity.WorkoutTemplate
 
 interface WorkoutTemplateRepository {
     suspend fun getAll(): List<WorkoutTemplate>

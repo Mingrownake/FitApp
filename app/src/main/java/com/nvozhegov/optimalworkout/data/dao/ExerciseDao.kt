@@ -3,7 +3,7 @@ package com.nvozhegov.optimalworkout.data.dao
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
 import kotlinx.coroutines.flow.Flow
 
 @Dao

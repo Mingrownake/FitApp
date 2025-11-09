@@ -86,8 +86,13 @@ fun MainNavScreen(
             ) {
                 TemplatesScreen(
                     scaffoldViewState = scaffoldState,
-                    navigateTo = {
-                        navController.navigate(AppScreen.Template) {
+                    navigateToCreateScreen = {
+                        navController.navigate("${AppScreen.Template.title}?target=${TemplateNavRoute.NewTemplate.title}") {
+                            launchSingleTop = true
+                        }
+                    },
+                    navigateToEditScreen = {
+                        navController.navigate(route = "${AppScreen.Template.title}?target=${TemplateNavRoute.EditTemplate.title}") {
                             launchSingleTop = true
                         }
                     }

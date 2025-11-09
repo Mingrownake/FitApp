@@ -1,13 +1,12 @@
 package com.nvozhegov.optimalworkout.domain.template
 
 import com.nvozhegov.optimalworkout.data.model.entity.Template
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class GetAllTemplatesUseCase @Inject constructor(
+class DeleteTemplateUseCase @Inject constructor(
     val templateRepository: TemplateRepository
 ) {
-    operator fun invoke(): Flow<List<Template>> {
-        return templateRepository.getAllTemplates()
+    suspend operator fun invoke(template: Template) {
+        templateRepository.delete(template)
     }
 }

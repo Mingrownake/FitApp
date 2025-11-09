@@ -1,4 +1,4 @@
-package com.nvozhegov.optimalworkout.data.model
+package com.nvozhegov.optimalworkout.data.model.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

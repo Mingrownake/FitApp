@@ -2,7 +2,7 @@ package com.nvozhegov.optimalworkout.presentation.screen.exercise
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.nvozhegov.optimalworkout.data.model.Exercise
+import com.nvozhegov.optimalworkout.data.model.entity.Exercise
 import com.nvozhegov.optimalworkout.domain.exercise.GetExercisesByGroupIdUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
