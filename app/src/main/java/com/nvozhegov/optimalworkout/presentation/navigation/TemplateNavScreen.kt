@@ -45,7 +45,7 @@ fun TemplateNavScreen(
     LaunchedEffect(startDestination) {
         if (startDestination != null && startDestination != TemplateNavRoute.NewTemplate.title) {
             templateNavController.navigate(startDestination) {
-                popUpTo(TemplateNavRoute.NewTemplate.title) { inclusive = false }
+                popUpTo(TemplateNavRoute.NewTemplate.title) { inclusive = true }
             }
         }
     }
